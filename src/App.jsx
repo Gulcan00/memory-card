@@ -12,9 +12,15 @@ function App() {
 
   const handleCardClick = (id) => {
     if (catsClicked.has(id)) {
-      setBestScore(catsClicked.size);
-      localStorage.setItem('bestScore', catsClicked.size);
+      const bestScoreLocal = parseInt(localStorage.getItem('bestScore'));
+      const newBestScore = Math.max(catsClicked.size, bestScoreLocal);
+      setBestScore(newBestScore);
+      localStorage.setItem('bestScore', newBestScore);
       setCatsClicked(new Set());
+      fetchCats()
+        .then((response) => response.json())
+        .then((data) => setCats(data))
+        .catch((e) => console.log(e));
     } else {
       const newCatsClicked = new Set(catsClicked);
       newCatsClicked.add(id);
@@ -46,24 +52,39 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const cards = document.querySelectorAll('.card.trigger-flip');
-    cards.forEach((card) => {
-      card.classList.remove('trigger-flip');
-    });
-  }, [cats]);
-
   if (totalCats === catsClicked.size && cats.length > 0) {
-    return <h1>You win</h1>;
+    return (
+      <div>
+        <h1>You win!</h1>
+        <button
+          onClick={() => {
+            fetchCats()
+              .then((response) => response.json())
+              .then((data) => setCats(data))
+              .catch((e) => console.log(e));
+            setCatsClicked(new Set());
+          }}
+        >
+          Restart
+        </button>
+      </div>
+    );
   }
 
   return (
     <>
       <header>
-        <h2>Current Score: {catsClicked.size}</h2>
-        <h2>Best Score: {bestScore}</h2>
+        <div className="container flex">
+          <nav className="nav">
+            <h1>MeowMory</h1>
+          </nav>
+          <div className="score-container">
+            <h2>Current Score: {catsClicked.size}</h2>
+            <h2>Best Score: {bestScore}</h2>
+          </div>
+        </div>
       </header>
-      <main className="cards-container">
+      <main className="container cards-container">
         {cats.map((cat) => (
           <Card
             key={cat.id}
@@ -78,9 +99,14 @@ function App() {
                 card.classList.add('trigger-flip');
               });
 
-              const shuffledCats = shuffle(cats);
               setTimeout(() => {
+                const shuffledCats = shuffle(cats);
                 setCats(shuffledCats);
+              }, 800);
+              setTimeout(() => {
+                cards.forEach((card) => {
+                  card.classList.remove('trigger-flip');
+                });
               }, 1500);
             }}
           />
