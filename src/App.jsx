@@ -13,6 +13,7 @@ function App() {
   const handleCardClick = (id) => {
     if (catsClicked.has(id)) {
       setBestScore(catsClicked.size);
+      localStorage.setItem('bestScore', catsClicked.size);
       setCatsClicked(new Set());
     } else {
       const newCatsClicked = new Set(catsClicked);
@@ -20,6 +21,13 @@ function App() {
       setCatsClicked(newCatsClicked);
     }
   };
+
+  useEffect(() => {
+    const bestScoreLocal = localStorage.getItem('bestScore');
+    if (bestScoreLocal) {
+      setBestScore(bestScoreLocal);
+    }
+  }, []);
 
   useEffect(() => {
     let ignore = false;
@@ -73,7 +81,7 @@ function App() {
               const shuffledCats = shuffle(cats);
               setTimeout(() => {
                 setCats(shuffledCats);
-              }, 2000);
+              }, 1500);
             }}
           />
         ))}
