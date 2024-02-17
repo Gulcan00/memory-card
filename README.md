@@ -1,8 +1,14 @@
-# React + Vite
+# MeowMory: Cat Memory Card Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+Welcome to MeowMory 🐱✨, a delightful memory card game featuring adorable cats! This project is a React-based application developed as part of The Odin Project's React course. In MeowMory, players are presented with a grid of cards, each displaying a unique image of a cat fetched from an external API. The objective of the game is to click on each card only once, testing and improving memory skills while enjoying the charming cat pictures.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+
+- React.js
+- JavaScript
+- External API (for fetching cat images)
+- CSS
+
+## Live Demo
