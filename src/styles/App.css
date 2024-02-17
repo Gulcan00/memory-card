@@ -72,11 +72,11 @@ dialog {
 }
 
 dialog.win {
-  background-image: url(../../public/images/happy_cat.jpg);
+  background-image: url(/images/happy_cat.jpg);
 }
 
 dialog.lose {
-  background-image: url(../../public/images/sad_cat.jpg);
+  background-image: url(/images/sad_cat.jpg);
 }
 
 dialog h1 {
