@@ -7,6 +7,7 @@ function App() {
   const [cats, setCats] = useState([]);
   const [catsClicked, setCatsClicked] = useState(new Set());
   const [bestScore, setBestScore] = useState(0);
+  const [dialogText, setDialogText] = useState('');
 
   const totalCats = cats.length;
 
@@ -16,11 +17,11 @@ function App() {
       const newBestScore = Math.max(catsClicked.size, bestScoreLocal);
       setBestScore(newBestScore);
       localStorage.setItem('bestScore', newBestScore);
-      setCatsClicked(new Set());
-      fetchCats()
-        .then((response) => response.json())
-        .then((data) => setCats(data))
-        .catch((e) => console.log(e));
+
+      const dialog = document.getElementById('dialog');
+      dialog.classList.add('lose');
+      setDialogText('You lose!');
+      dialog.showModal();
     } else {
       const newCatsClicked = new Set(catsClicked);
       newCatsClicked.add(id);
@@ -32,6 +33,8 @@ function App() {
     const bestScoreLocal = localStorage.getItem('bestScore');
     if (bestScoreLocal) {
       setBestScore(bestScoreLocal);
+    } else {
+      localStorage.setItem('bestScore', 0);
     }
   }, []);
 
@@ -52,24 +55,14 @@ function App() {
     };
   }, []);
 
-  if (totalCats === catsClicked.size && cats.length > 0) {
-    return (
-      <div>
-        <h1>You win!</h1>
-        <button
-          onClick={() => {
-            fetchCats()
-              .then((response) => response.json())
-              .then((data) => setCats(data))
-              .catch((e) => console.log(e));
-            setCatsClicked(new Set());
-          }}
-        >
-          Restart
-        </button>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const dialog = document.getElementById('dialog');
+    if (totalCats === catsClicked.size && totalCats > 0) {
+      dialog.classList.add('win');
+      setDialogText('You win!');
+      dialog.showModal();
+    }
+  }, [totalCats, catsClicked]);
 
   return (
     <>
@@ -112,6 +105,29 @@ function App() {
           />
         ))}
       </main>
+      <dialog
+        id="dialog"
+        onClose={(e) => {
+          e.target.className = '';
+          fetchCats()
+            .then((response) => response.json())
+            .then((data) => setCats(data))
+            .catch((e) => console.log(e));
+          setCatsClicked(new Set());
+        }}
+        aria-labelledby="dialog__title"
+      >
+        <h1 id="dialog__title">{dialogText}</h1>
+        <button
+          onClick={(e) => {
+            const dialog = e.target.parentNode;
+            dialog.close();
+          }}
+          className="restart"
+        >
+          Restart
+        </button>
+      </dialog>
     </>
   );
 }
