@@ -1,8 +1,8 @@
-#root {
+.container {
   width: 80%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 0;
   text-align: center;
 }
 
@@ -11,4 +11,31 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   perspective: 600px;
+}
+
+.score-container {
+  background-color: var(--satin-sheen-gold);
+  width: fit-content;
+  padding: 0.5em;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.125rem;
 }
