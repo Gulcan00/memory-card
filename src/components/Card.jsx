@@ -1,16 +1,8 @@
 import '../styles/Card.css';
 
-export default function Card({ src, text }) {
+export default function Card({ src, text, onClick }) {
   return (
-    <button
-      className="card"
-      onClick={() => {
-        const cards = document.querySelectorAll('.card');
-        cards.forEach((card) => {
-          card.classList.toggle('trigger-flip');
-        });
-      }}
-    >
+    <button className="card" onClick={onClick}>
       <span className="card__face card__face--front">
         <img src={src} alt="" className="card__face__img" />
         <span className="card__face__text">{text}</span>
