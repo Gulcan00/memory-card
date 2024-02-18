@@ -1,5 +1,8 @@
 fieldset {
   border: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .visually-hidden {
