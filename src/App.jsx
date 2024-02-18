@@ -11,14 +11,17 @@ function App() {
 
   const totalCats = cats.length;
 
-  const handleCardClick = (id) => {
-    if (catsClicked.has(id)) {
-      const bestScoreLocal = parseInt(localStorage.getItem('bestScore'));
-      const newBestScore = Math.max(catsClicked.size, bestScoreLocal);
-      setBestScore(newBestScore);
-      localStorage.setItem('bestScore', newBestScore);
+  const updateBestScore = (newScore) => {
+    const bestScoreLocal = parseInt(localStorage.getItem('bestScore'));
+    const newBestScore = Math.max(newScore, bestScoreLocal);
+    setBestScore(newBestScore);
+    localStorage.setItem('bestScore', newBestScore);
+  };
 
-      const dialog = document.getElementById('dialog');
+  const handleCardClick = (id) => {
+    const dialog = document.getElementById('dialog');
+    if (catsClicked.has(id)) {
+      updateBestScore(catsClicked.size);
       dialog.classList.add('lose');
       setDialogText('You lose!');
       dialog.showModal();
@@ -26,6 +29,12 @@ function App() {
       const newCatsClicked = new Set(catsClicked);
       newCatsClicked.add(id);
       setCatsClicked(newCatsClicked);
+      if (totalCats === newCatsClicked.size && totalCats > 0) {
+        updateBestScore(newCatsClicked.size);
+        dialog.classList.add('win');
+        setDialogText('You win!');
+        dialog.showModal();
+      }
     }
   };
 
@@ -54,15 +63,6 @@ function App() {
       ignore = true;
     };
   }, []);
-
-  useEffect(() => {
-    const dialog = document.getElementById('dialog');
-    if (totalCats === catsClicked.size && totalCats > 0) {
-      dialog.classList.add('win');
-      setDialogText('You win!');
-      dialog.showModal();
-    }
-  }, [totalCats, catsClicked]);
 
   return (
     <>
