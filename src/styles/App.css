@@ -2,12 +2,14 @@
   width: 80%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 1rem 0 0 0;
   text-align: center;
 }
 
-.nav h1 {
+h1.title {
   font-family: 'Luckiest Guy', sans-serif;
+  align-self: stretch;
+  font-size: 2.5rem;
 }
 
 .cards-container {
@@ -25,9 +27,16 @@
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
 }
 
+.status {
+  margin: 0;
+  padding-bottom: 1em;
+  font-size: 1.3rem;
+}
+
 .flex {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -47,6 +56,7 @@ h2 {
 dialog[open] {
   opacity: 1;
   transform: scaleY(1);
+  visibility: visible;
 }
 
 dialog {
@@ -65,10 +75,12 @@ dialog {
   justify-content: space-between;
   background-size: cover;
   opacity: 0;
+  visibility: hidden;
   transform: scaleY(0);
   transform-origin: top;
   transition: opacity 0.7s ease-out, transform 0.7s ease-out,
-    overlay 0.7s ease-out allow-discrete, display 0.7s ease-out allow-discrete;
+    overlay 0.7s ease-out allow-discrete, display 0.7s ease-out allow-discrete,
+    visibility 0.7s ease-out allow-discrete;
 }
 
 dialog.win {
@@ -93,13 +105,6 @@ dialog.lose h1 {
   background-color: lightsalmon;
 }
 
-@starting-style {
-  dialog[open] {
-    opacity: 0;
-    transform: scaleY(0);
-  }
-}
-
 dialog::backdrop {
   background-color: rgb(0 0 0 / 0%);
   transition: display 0.7s allow-discrete, overlay 0.7s allow-discrete,
@@ -110,13 +115,7 @@ dialog[open]::backdrop {
   background-color: rgb(0 0 0 / 25%);
 }
 
-@starting-style {
-  dialog[open]::backdrop {
-    background-color: rgb(0 0 0 / 0%);
-  }
-}
-
-.restart {
+.btn {
   appearance: none;
   font-family: inherit;
   font-size: inherit;
@@ -127,12 +126,15 @@ dialog[open]::backdrop {
   outline: none;
   border: none;
   border-radius: 100px;
+}
+
+.restart {
   width: 50%;
   align-self: center;
 }
 
-.restart:focus,
-.restart:hover {
+.btn:focus,
+.btn:hover {
   outline: none;
   box-shadow: 0 0 0 calc(4px + 0px) var(--mint);
 }

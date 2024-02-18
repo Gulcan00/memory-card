@@ -19,6 +19,7 @@
 .card:hover {
   outline: none;
   box-shadow: 0 0 0 calc(4px + 0px) var(--mint);
+  opacity: 75%;
 }
 
 .card__face {
